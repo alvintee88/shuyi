@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShuYi DOB Calculator</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">	
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +46,7 @@
 
     <div class="container">
         <label for="dob">出生日期</label>
-        <input type="date" id="dob">
+        <input type="date" id="dob" placeholder="Select Date"> 
         <button onclick="calculateAndDraw()">提交</button>
     </div>
 
@@ -195,8 +196,24 @@
     </div>
 
     <canvas id="myCanvas" width="300" height="300"></canvas>
-
+	
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
+	// Initialize Flatpickr when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', (event) => {
+            flatpickr("#dob", {
+                dateFormat: "Y-m-d", // Output format (Year-Month-Day)
+                defaultDate: "today", // Set default date to today
+                // Enable year and month dropdowns
+                // These options significantly enhance selection on both desktop and mobile
+                enableTime: false, // Ensure time selection is off
+                allowInput: true, // Allow manual typing if desired
+                // Configuration to show dropdowns for year and month
+                minDate: "1900-01-01", // Example: restrict min date
+                maxDate: "2100-12-31", // Example: restrict max date
+                // Hooks to ensure it's robust for mobile and desktop
+            });
+        });
         // Function to format date as YYYY-MM-DD
         function getTodayDateString() {
             const today = new Date();
@@ -364,10 +381,10 @@
 
             // Draw Triangle
 
-            drawTriangle();
+            drawTriangle(day);
         }
 
-        function drawTriangle() {
+        function drawTriangle(textA) {
             const canvas = document.getElementById('myCanvas');
             const ctx = canvas.getContext('2d');
 
@@ -428,6 +445,17 @@
             ctx.strokeStyle = 'red';
             ctx.lineWidth = 1;
             ctx.stroke();
+			
+			
+            // --- Draw Text Inside Triangle ---
+            ctx.fillStyle = 'black'; // Text color
+            ctx.font = '24px Arial'; // Text font and size
+            ctx.textAlign = 'center'; // Center text horizontally
+            ctx.textBaseline = 'middle'; // Center text vertically
+			// Position for M_ (Top segment)
+            const A_TextY = topY + (segmentHeight / 2);
+            ctx.fillText(textA, apexX, A_TextY);
+			
         }
     </script>
 
