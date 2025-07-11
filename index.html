@@ -3,25 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOB Calculator & Triangle</title>
+    <title>ShuYi DOB Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
         .container {
+			display: flex; /* Make the container a flex container */
+			align-items: center; /* Vertically align items in the middle */
+            gap: 10px; /* Add space between items */
             margin-bottom: 20px;
         }
         label, input, button {
             margin-bottom: 10px;
             display: block;
         }
-        #results {
+        #resultx {
             margin-top: 20px;
             padding: 15px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
         }
+    /* --- New Table Styles --- */
+        #results table {
+            width: 100%;
+            border-collapse: collapse; /* Removes space between table borders */
+            margin-top: 10px;
+        }
+        #results th, #results td {
+            border: 1px solid #ddd; /* Light border for cells */
+            padding: 8px;
+            text-align: left;
+        }
+        #results th {
+            background-color: #f2f2f2; /* Light background for headers */
+        }		
         canvas {
             border: 1px solid #000;
             margin-top: 20px;
@@ -33,17 +50,79 @@
     <h1>数易文化联合数字计算法</h1>
 
     <div class="container">
-        <label for="dob">Enter Date of Birth:</label>
+        <label for="dob">出生日期</label>
         <input type="date" id="dob">
-        <button onclick="calculateAndDraw()">Submit</button>
+        <button onclick="calculateAndDraw()">提交</button>
     </div>
 
     <div id="results">
-        <h2>Calculation Results:</h2>
-        <p><strong>Add up Day (I_):</strong> <span id="addUpDay"></span></p>
-        <p><strong>Add up Month (J_):</strong> <span id="addUpMonth"></span></p>
-        <p><strong>Year Part 1 (K_):</strong> <span id="addUpYearPart1"></span></p>
-        <p><strong>Year Part 2 (L_):</strong> <span id="addUpYearPart2"></span></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Calculation</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>(1) 父基因</strong></td>
+                    <td id="F1_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(2) 母基因</strong></td>
+                    <td id="F2_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(3) 主性格</strong></td>
+                    <td id="F3_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(4) 人生过程1</strong></td>
+                    <td id="F4_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(5) 人生过程2</strong></td>
+                    <td id="F5_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(6) 子女下属</strong></td>
+                    <td id="F6_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(7) 事业过程1</strong></td>
+                    <td id="F7_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(8) 事业过程2</strong></td>
+                    <td id="F8_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(9) 当下朋友</strong></td>
+                    <td id="F9_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(10) 婚姻过程1</strong></td>
+                    <td id="F10_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(11) 婚姻过程2</strong></td>
+                    <td id="F11_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(12) 晚年、健康、财富、子女</strong></td>
+                    <td id="F12_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(13) 隐藏号</strong></td>
+                    <td id="F13_Result"></td>
+                </tr>		
+			</tbody>
+        </table>
+		
+        <p><strong>I:</strong> <span id="addUpDay"></span></p>
+        <p><strong>I:</strong> <span id="addUpMonth"></span></p>
+        <p><strong>K:</strong> <span id="addUpYearPart1"></span></p>
+        <p><strong>L:</strong> <span id="addUpYearPart2"></span></p>
         <p><strong>M_ (I_ + J_):</strong> <span id="M_Result"></span></p>
         <p><strong>N_ (K_ + L_):</strong> <span id="N_Result"></span></p>
         <p><strong>O_ (M_ + N_):</strong> <span id="O_Result"></span></p>
@@ -56,19 +135,6 @@
         <p><strong>V_ (K_ + N_):</strong> <span id="V_Result"></span></p>
         <p><strong>W_ (L_ + N_):</strong> <span id="W_Result"></span></p>
         <p><strong>X_ (V_ + W_):</strong> <span id="X_Result"></span></p>
-        <p><strong>父基因:</strong> <span id="F1_Result"></span></p>
-        <p><strong>母基因:</strong> <span id="F2_Result"></span></p>
-        <p><strong>主性格:</strong> <span id="F3_Result"></span></p>
-        <p><strong>人生过程1:</strong> <span id="F4_Result"></span></p>
-        <p><strong>人生过程2:</strong> <span id="F5_Result"></span></p>
-        <p><strong>子女下属:</strong> <span id="F6_Result"></span></p>
-        <p><strong>事业过程1:</strong> <span id="F7_Result"></span></p>
-        <p><strong>事业过程2:</strong> <span id="F8_Result"></span></p>
-        <p><strong>当下朋友:</strong> <span id="F9_Result"></span></p>
-        <p><strong>婚姻过程1:</strong> <span id="F10_Result"></span></p>
-        <p><strong>婚姻过程2:</strong> <span id="F11_Result"></span></p>
-        <p><strong>晚年、健康、财富、子女:</strong> <span id="F12_Result"></span></p>
-        <p><strong>隐藏号:</strong> <span id="F13_Result"></span></p>
     </div>
 
     <canvas id="myCanvas" width="300" height="300"></canvas>
@@ -89,7 +155,7 @@
                 day = '0' + day;
             }
             //return `${year}-${month}-${day}`;
-			return '1982-11-27';
+			return '1967-03-26'; //'2009-06-02'; 
         }
 
         // Set the default value when the page loads
@@ -204,7 +270,7 @@
             const F6_ = Q_ + " " + P_ + " " + R_;
             document.getElementById('F6_Result').textContent = F6_;
 
-            const F7_ = I_ + " " + J_ + " " + M_;
+            const F7_ = I_ + " " + M_ + " " + T_;
             document.getElementById('F7_Result').textContent = F7_;
 
             const F8_ = J_ + " " + M_ + " " + S_;
@@ -213,13 +279,13 @@
             const F9_ = T_ + " " + S_ + " " + U_;
             document.getElementById('F9_Result').textContent = F9_;
 
-            const F10_ = K_ + " " + N_ + " " + V_;
+            const F10_ = L_ + " " + N_ + " " + W_;
             document.getElementById('F10_Result').textContent = F10_;
 
-            const F11_ = L_ + " " + N_ + " " + W_;
+            const F11_ = K_ + " " + N_ + " " + V_;
             document.getElementById('F11_Result').textContent = F11_;
 
-            const F12_ = V_ + " " + W_ + " " + X_;
+            const F12_ = W_ + " "  + V_ + " " +  X_;
             document.getElementById('F12_Result').textContent = F12_;
 
 
