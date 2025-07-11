@@ -19,12 +19,6 @@
             margin-bottom: 10px;
             display: block;
         }
-        #resultx {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
     /* --- New Table Styles --- */
         #results table {
             width: 100%;
@@ -47,7 +41,7 @@
 </head>
 <body>
 
-    <h1>数易文化联合数字计算法</h1>
+    <h2>数易文化联合数字计算法</h2>
 
     <div class="container">
         <label for="dob">出生日期</label>
@@ -59,8 +53,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>Calculation</th>
-                    <th>Result</th>
+                    <th>组别</th>
+                    <th>数字</th>
                 </tr>
             </thead>
             <tbody>
@@ -118,23 +112,86 @@
                 </tr>		
 			</tbody>
         </table>
+        <table>
+			<tbody>
+				<tr>
+					<td><strong>A</strong></td>
+					<td><strong>B</strong></td>
+					<td><strong>C</strong></td>
+					<td><strong>D</strong></td>
+					<td><strong>E</strong></td>
+					<td><strong>F</strong></td>
+					<td><strong>G</strong></td>
+					<td><strong>H</strong></td>
+				</tr>		
+				<tr>
+					<td id="A_Result"></td>
+					<td id="B_Result"></td>
+					<td id="C_Result"></td>
+					<td id="D_Result"></td>
+					<td id="E_Result"></td>
+					<td id="F_Result"></td>
+					<td id="G_Result"></td>
+					<td id="H_Result"></td>
+				</tr>		
+				<tr>
+					<td><strong>I (A + B)</strong></td>
+					<td><strong></strong></td>
+					<td><strong>J (C + D)</strong></td>
+					<td><strong></strong></td>
+					<td><strong>K (E + F)</strong></td>
+					<td><strong></strong></td>
+					<td><strong>L (G + H)</strong></td>
+					<td></td>
+				</tr>		
+				<tr>
+					<td id="I_Result"></td>
+					<td></td>
+					<td id="J_Result"></td>
+					<td></td>
+					<td id="K_Result"></td>
+					<td></td>
+					<td id="L_Result"></td>
+					<td></td>
+				</tr>		
+				<tr>
+					<td><strong>M (I + J)</strong></td>
+					<td><strong></strong></td>
+					<td><strong></strong></td>
+					<td><strong></strong></td>
+					<td><strong>N (K + L)</strong></td>
+					<td><strong></strong></td>
+					<td></td>
+					<td></td>
+				</tr>		
+				<tr>
+					<td id="M_Result"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td id="N_Result"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>		
+				<tr>
+					<td><strong>O (M + N)</strong></td>
+				</tr>		
+				<tr>
+					<td id="O_Result"></td>
+				</tr>		
+			</tbody>
+        </table>
 		
-        <p><strong>I:</strong> <span id="addUpDay"></span></p>
-        <p><strong>I:</strong> <span id="addUpMonth"></span></p>
-        <p><strong>K:</strong> <span id="addUpYearPart1"></span></p>
-        <p><strong>L:</strong> <span id="addUpYearPart2"></span></p>
-        <p><strong>M_ (I_ + J_):</strong> <span id="M_Result"></span></p>
-        <p><strong>N_ (K_ + L_):</strong> <span id="N_Result"></span></p>
-        <p><strong>O_ (M_ + N_):</strong> <span id="O_Result"></span></p>
-        <p><strong>P_ (M_ + O_):</strong> <span id="P_Result"></span></p>
-        <p><strong>Q_ (N_ + O_):</strong> <span id="Q_Result"></span></p>
-        <p><strong>R_ (Q_ + P_):</strong> <span id="R_Result"></span></p>
-        <p><strong>S_ (J_ + M_):</strong> <span id="S_Result"></span></p>
-        <p><strong>T_ (I_ + M_):</strong> <span id="T_Result"></span></p>
-        <p><strong>U_ (T_ + S_):</strong> <span id="U_Result"></span></p>
-        <p><strong>V_ (K_ + N_):</strong> <span id="V_Result"></span></p>
-        <p><strong>W_ (L_ + N_):</strong> <span id="W_Result"></span></p>
-        <p><strong>X_ (V_ + W_):</strong> <span id="X_Result"></span></p>
+        <p><strong>P (M + O):</strong> <span id="P_Result"></span></p>
+        <p><strong>Q (N + O):</strong> <span id="Q_Result"></span></p>
+        <p><strong>R (Q + P):</strong> <span id="R_Result"></span></p>
+        <p><strong>S (J + M):</strong> <span id="S_Result"></span></p>
+        <p><strong>T (I + M):</strong> <span id="T_Result"></span></p>
+        <p><strong>U (T + S):</strong> <span id="U_Result"></span></p>
+        <p><strong>V (K + N):</strong> <span id="V_Result"></span></p>
+        <p><strong>W (L + N):</strong> <span id="W_Result"></span></p>
+        <p><strong>X (V + W):</strong> <span id="X_Result"></span></p>
     </div>
 
     <canvas id="myCanvas" width="300" height="300"></canvas>
@@ -155,7 +212,7 @@
                 day = '0' + day;
             }
             //return `${year}-${month}-${day}`;
-			return '1999-12-31'; //'2009-06-02'; 
+			return '1999-12-31'; 
         }
 
         // Set the default value when the page loads
@@ -192,24 +249,32 @@
                 return sum;
             }
 
+            document.getElementById('A_Result').textContent = day[0];
+            document.getElementById('B_Result').textContent = day[1];
+            document.getElementById('C_Result').textContent = month[0];
+            document.getElementById('D_Result').textContent = month[1];
+            document.getElementById('E_Result').textContent = year[0];
+            document.getElementById('F_Result').textContent = year[1];
+            document.getElementById('G_Result').textContent = year[2];
+            document.getElementById('H_Result').textContent = year[3];
             // Calculate Add up Day
             const I_ = sumDigits(day);
-            document.getElementById('addUpDay').textContent = I_;
+            document.getElementById('I_Result').textContent = I_;
 
             // Calculate Add up Month
             const J_ = sumDigits(month);
-            document.getElementById('addUpMonth').textContent = J_;
+            document.getElementById('J_Result').textContent = J_;
 
             // Calculate Add up Year Parts
 
             const K_ = sumDigits(year.substring(0, 2)); // e.g., "19" or "20"
             // For display, we show the summed digit of each part
             const addUpYearPart1Result = K_;
-            document.getElementById('addUpYearPart1').textContent = addUpYearPart1Result;
+            document.getElementById('K_Result').textContent = addUpYearPart1Result;
 
             const L_ = sumDigits(year.substring(2, 4)); // e.g., "82" or "25"
             const addUpYearPart2Result = L_;
-            document.getElementById('addUpYearPart2').textContent = addUpYearPart2Result;
+            document.getElementById('L_Result').textContent = addUpYearPart2Result;
 
 
             // NEW CALCULATION: M_ = I_addUpDay + J_addUpMonth
