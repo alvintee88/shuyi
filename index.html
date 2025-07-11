@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOB Calculator & Triangle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            margin-bottom: 20px;
+        }
+        label, input, button {
+            margin-bottom: 10px;
+            display: block;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>数易文化联合数字计算法</h1>
+
+    <div class="container">
+        <label for="dob">Enter Date of Birth:</label>
+        <input type="date" id="dob">
+        <button onclick="calculateAndDraw()">Submit</button>
+    </div>
+
+    <div id="results">
+        <h2>Calculation Results:</h2>
+        <p><strong>Add up Day (I_):</strong> <span id="addUpDay"></span></p>
+        <p><strong>Add up Month (J_):</strong> <span id="addUpMonth"></span></p>
+        <p><strong>Year Part 1 (K_):</strong> <span id="addUpYearPart1"></span></p>
+        <p><strong>Year Part 2 (L_):</strong> <span id="addUpYearPart2"></span></p>
+        <p><strong>M_ (I_ + J_):</strong> <span id="M_Result"></span></p>
+        <p><strong>N_ (K_ + L_):</strong> <span id="N_Result"></span></p>
+        <p><strong>O_ (M_ + N_):</strong> <span id="O_Result"></span></p>
+        <p><strong>P_ (M_ + O_):</strong> <span id="P_Result"></span></p>
+        <p><strong>Q_ (N_ + O_):</strong> <span id="Q_Result"></span></p>
+        <p><strong>R_ (Q_ + P_):</strong> <span id="R_Result"></span></p>
+        <p><strong>S_ (J_ + M_):</strong> <span id="S_Result"></span></p>
+        <p><strong>T_ (I_ + M_):</strong> <span id="T_Result"></span></p>
+        <p><strong>U_ (T_ + S_):</strong> <span id="U_Result"></span></p>
+        <p><strong>V_ (K_ + N_):</strong> <span id="V_Result"></span></p>
+        <p><strong>W_ (L_ + N_):</strong> <span id="W_Result"></span></p>
+        <p><strong>X_ (V_ + W_):</strong> <span id="X_Result"></span></p>
+        <p><strong>父基因:</strong> <span id="F1_Result"></span></p>
+        <p><strong>母基因:</strong> <span id="F2_Result"></span></p>
+        <p><strong>主性格:</strong> <span id="F3_Result"></span></p>
+        <p><strong>人生过程1:</strong> <span id="F4_Result"></span></p>
+        <p><strong>人生过程2:</strong> <span id="F5_Result"></span></p>
+        <p><strong>子女下属:</strong> <span id="F6_Result"></span></p>
+        <p><strong>事业过程1:</strong> <span id="F7_Result"></span></p>
+        <p><strong>事业过程2:</strong> <span id="F8_Result"></span></p>
+        <p><strong>当下朋友:</strong> <span id="F9_Result"></span></p>
+        <p><strong>婚姻过程1:</strong> <span id="F10_Result"></span></p>
+        <p><strong>婚姻过程2:</strong> <span id="F11_Result"></span></p>
+        <p><strong>晚年、健康、财富、子女:</strong> <span id="F12_Result"></span></p>
+        <p><strong>隐藏号:</strong> <span id="F13_Result"></span></p>
+    </div>
+
+    <canvas id="myCanvas" width="300" height="300"></canvas>
+
+    <script>
+        // Function to format date as YYYY-MM-DD
+        function getTodayDateString() {
+            const today = new Date();
+            const year = today.getFullYear();
+            let month = today.getMonth() + 1; // Months are 0-indexed
+            let day = today.getDate();
+
+            // Pad with leading zero if necessary
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (day < 10) {
+                day = '0' + day;
+            }
+            //return `${year}-${month}-${day}`;
+			return '1982-11-27';
+        }
+
+        // Set the default value when the page loads
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('dob').value = getTodayDateString();
+        });
+
+
+        function calculateAndDraw() {
+            const dobInput = document.getElementById('dob').value;
+
+            if (!dobInput) {
+                alert('Please select a date of birth.');
+                return;
+            }
+
+            // Split the date for calculations (it comes as YYYY-MM-DD)
+            const dateParts = dobInput.split('-'); // ["YYYY", "MM", "DD"]
+            const year = dateParts[0];
+            const month = dateParts[1];
+            const day = dateParts[2];
+
+            // Function to sum digits repeatedly until a single digit
+            function sumDigits(numStr) {
+                let sum = 0;
+                // Ensure numStr is treated as a string for iteration
+                const str = String(numStr);
+                for (let i = 0; i < str.length; i++) {
+                    sum += parseInt(str[i], 10); // Use radix 10 for parseInt
+                }
+                if (sum >= 10) {
+                    return sumDigits(sum.toString());
+                }
+                return sum;
+            }
+
+            // Calculate Add up Day
+            const I_ = sumDigits(day);
+            document.getElementById('addUpDay').textContent = I_;
+
+            // Calculate Add up Month
+            const J_ = sumDigits(month);
+            document.getElementById('addUpMonth').textContent = J_;
+
+            // Calculate Add up Year Parts
+
+            const K_ = sumDigits(year.substring(0, 2)); // e.g., "19" or "20"
+            // For display, we show the summed digit of each part
+            const addUpYearPart1Result = K_;
+            document.getElementById('addUpYearPart1').textContent = addUpYearPart1Result;
+
+            const L_ = sumDigits(year.substring(2, 4)); // e.g., "82" or "25"
+            const addUpYearPart2Result = L_;
+            document.getElementById('addUpYearPart2').textContent = addUpYearPart2Result;
+
+
+            // NEW CALCULATION: M_ = I_addUpDay + J_addUpMonth
+            // First sum the numbers, then apply sumDigits to the result (converted to string)
+            const M_ = sumDigits((I_ + J_).toString());
+            document.getElementById('M_Result').textContent = M_;
+
+            // NEW CALCULATION: N_ = K_yearPart1 + L_yearPart2
+            // Sum the *numeric values* of the year parts, then apply sumDigits
+            const N_ = sumDigits((parseInt(K_, 10) + parseInt(L_, 10)).toString());
+            document.getElementById('N_Result').textContent = N_;
+
+            const O_ = sumDigits( (M_ + N_) ).toString() ;
+            document.getElementById('O_Result').textContent = O_;
+
+            const P_ = sumDigits( (M_ + O_) ).toString() ;
+            document.getElementById('P_Result').textContent = P_;
+
+            const Q_ = sumDigits( (N_ + O_) ).toString() ;
+            document.getElementById('Q_Result').textContent = Q_;
+
+            const R_ = sumDigits( (Q_ + P_) ).toString() ;
+            document.getElementById('R_Result').textContent = R_;
+
+            const S_ = sumDigits( (J_ + M_) ).toString() ;
+            document.getElementById('S_Result').textContent = S_;
+
+            const T_ = sumDigits( (I_ + M_) ).toString() ;
+            document.getElementById('T_Result').textContent = T_;
+
+            const U_ = sumDigits( (T_ + S_) ).toString() ;
+            document.getElementById('U_Result').textContent = U_;
+
+            const V_ = sumDigits( (K_ + N_) ).toString() ;
+            document.getElementById('V_Result').textContent = V_;
+
+            const W_ = sumDigits( (L_ + N_) ).toString() ;
+            document.getElementById('W_Result').textContent = W_;
+
+            const X_ = sumDigits( (V_ + W_) ).toString() ;
+            document.getElementById('X_Result').textContent = X_;
+
+            const F1_ = I_ + " " + J_ + " " + M_;
+            document.getElementById('F1_Result').textContent = F1_;
+
+            const F2_ = addUpYearPart1Result + " " + addUpYearPart2Result + " " + N_;
+            document.getElementById('F2_Result').textContent = F2_;
+			
+            const F3_ = M_ + " " + N_ + " " + O_;
+            document.getElementById('F3_Result').textContent = F3_;
+
+            const F4_ = M_ + " " + O_ + " " + P_;
+            document.getElementById('F4_Result').textContent = F4_;
+			
+            const F5_ = N_ + " " + O_ + " " + Q_;
+            document.getElementById('F5_Result').textContent = F5_;
+
+            const F6_ = Q_ + " " + P_ + " " + R_;
+            document.getElementById('F6_Result').textContent = F6_;
+
+            const F7_ = I_ + " " + J_ + " " + M_;
+            document.getElementById('F7_Result').textContent = F7_;
+
+            const F8_ = J_ + " " + M_ + " " + S_;
+            document.getElementById('F8_Result').textContent = F8_;
+
+            const F9_ = T_ + " " + S_ + " " + U_;
+            document.getElementById('F9_Result').textContent = F9_;
+
+            const F10_ = K_ + " " + N_ + " " + V_;
+            document.getElementById('F10_Result').textContent = F10_;
+
+            const F11_ = L_ + " " + N_ + " " + W_;
+            document.getElementById('F11_Result').textContent = F11_;
+
+            const F12_ = V_ + " " + W_ + " " + X_;
+            document.getElementById('F12_Result').textContent = F12_;
+
+
+            const Y1 = sumDigits( (M_ + M_) ).toString() ;
+            const Y2 = sumDigits( (N_ + N_) ).toString() ;
+            const Y3 = sumDigits( (O_ + O_) ).toString() ;
+
+            const F13_ = Y1 + " " + Y2 + " " + Y3;
+            document.getElementById('F13_Result').textContent = F13_;
+
+
+            // Draw Triangle
+
+            drawTriangle();
+        }
+
+        function drawTriangle() {
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear previous drawing
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Triangle dimensions
+            const topY = 50;
+            const bottomY = 250;
+            const topLeftX = 50;
+            const topRightX = 250;
+            const apexX = 150; // Center X
+
+            const triangleHeight = bottomY - topY; // 200 pixels
+            const segmentHeight = triangleHeight / 3; // ~66.67 pixels per segment
+
+            // Draw the main inverted triangle
+            ctx.beginPath();
+            ctx.moveTo(topLeftX, topY);       // Top-left point
+            ctx.lineTo(topRightX, topY);      // Top-right point
+            ctx.lineTo(apexX, bottomY);       // Bottom point (apex)
+            ctx.closePath();
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.fillStyle = 'lightblue';
+            ctx.fill();
+
+            // Function to get the x-coordinates on the triangle's sides at a given y
+            function getXCoordinatesAtY(y) {
+                // Linear interpolation for X
+                // For left side: from (topLeftX, topY) to (apexX, bottomY)
+                const ratioFromTop = (y - topY) / triangleHeight;
+                const currentLeftX = topLeftX + ratioFromTop * (apexX - topLeftX);
+
+                // For right side: from (topRightX, topY) to (apexX, bottomY)
+                const currentRightX = topRightX + ratioFromTop * (apexX - topRightX);
+
+                return { left: currentLeftX, right: currentRightX };
+            }
+
+            // Draw the first horizontal line (dividing 1st and 2nd part)
+            const line1Y = topY + segmentHeight;
+            const line1Coords = getXCoordinatesAtY(line1Y);
+            ctx.beginPath();
+            ctx.moveTo(line1Coords.left, line1Y);
+            ctx.lineTo(line1Coords.right, line1Y);
+            ctx.strokeStyle = 'red'; // Different color for internal lines
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Draw the second horizontal line (dividing 2nd and 3rd part)
+            const line2Y = topY + (2 * segmentHeight);
+            const line2Coords = getXCoordinatesAtY(line2Y);
+            ctx.beginPath();
+            ctx.moveTo(line2Coords.left, line2Y);
+            ctx.lineTo(line2Coords.right, line2Y);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+    </script>
+
+</body>
+</html>
