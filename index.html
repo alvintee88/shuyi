@@ -61,7 +61,6 @@
                 <tr>
                     <td><strong>(1) 父基因</strong></td>
                     <td id="F1_Result"></td>
-                </tr>		
                 <tr>
                     <td><strong>(2) 母基因</strong></td>
                     <td id="F2_Result"></td>
@@ -361,6 +360,7 @@
             const F13_ = Y1 + " " + Y2 + " " + Y3;
             document.getElementById('F13_Result').textContent = F13_;
 
+			document.getElementById('F1_Result').innerHTML = F1_ + ' <a href="#" onclick="openModal(\'437.html\');return false;">Show Details</a>';
 
             // Draw Triangle
 
@@ -440,7 +440,30 @@
             ctx.fillText(textA, apexX, A_TextY);
 			
         }
-    </script>
+		function openModal(filename) {
+  document.getElementById('myModal').style.display = 'block';
+  fetch(filename)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('modalContent').innerHTML = data;
+    })
+    .catch(error => {
+      document.getElementById('modalContent').innerHTML = 'Failed to load content.';
+    });
+}
 
+function closeModal() {
+  document.getElementById('myModal').style.display = 'none';
+  document.getElementById('modalContent').innerHTML = '';
+}
+    </script>
+<!-- Modal Structure -->
+<div id="myModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.4);">
+  <div style="background:#fff; margin:10% auto; padding:20px; border:1px solid #888; width:80%; position:relative;">
+    <span onclick="closeModal()" 
+          style="position:absolute; right:20px; top:10px; cursor:pointer; font-size:24px;">&times;</span>
+    <div id="modalContent">Loading...</div>
+  </div>
+</div>
 </body>
 </html>
