@@ -38,12 +38,17 @@
             border: 1px solid #000;
             margin-top: 20px;
         }
+        #loadStatus { /* Added style for the status message */
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }		
     </style>
 </head>
 <body>
 
-    <h2>数易文化联合数字计算法 v1.1</h2>
-
+    <h2>数易文化联合数字计算法 v1.0</h2>
+    <div id="loadStatus">Loading scripts...</div>
     <div class="container">
         <label for="dob">出生日期</label>
         <input type="text" id="dob" placeholder="Select Date"> 
@@ -200,8 +205,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
 	// Initialize Flatpickr when the DOM is loaded
+     // Get the status element
+        const loadStatusElement = document.getElementById('loadStatus');
+	
         document.addEventListener('DOMContentLoaded', (event) => {
-            flatpickr("#dob", {
+		   try {
+				flatpickr("#dob", {
                 dateFormat: "Y-m-d", // Output format (Year-Month-Day)
                 defaultDate: "today", // Set default date to today
                 // Enable year and month dropdowns
@@ -213,6 +222,13 @@
                 maxDate: "2100-12-31", // Example: restrict max date
                 // Hooks to ensure it's robust for mobile and desktop
             });
+                loadStatusElement.textContent = "Flatpickr loaded successfully!";
+                loadStatusElement.style.color = "green"; // Make it green on success
+            } catch (error) {
+                loadStatusElement.textContent = `Error loading Flatpickr: ${error.message}`;
+                loadStatusElement.style.color = "red"; // Make it red on error
+                console.error("Flatpickr initialization error:", error); // Also log to console for debugging
+            }			
         });
         // Function to format date as YYYY-MM-DD
         function getTodayDateString() {
