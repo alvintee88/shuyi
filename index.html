@@ -37,6 +37,7 @@
             border: 1px solid #000;
             margin-top: 20px;
         }
+  }
     </style>
 </head>
 <body>
@@ -50,6 +51,8 @@
     </div>
 
     <div id="results">
+        <p style="color: blue;"><strong>主性格:</strong> <span  id="F0_Result">-</span></p>
+
         <table>
             <thead>
                 <tr>
@@ -322,26 +325,26 @@
             const Y3 = sumDigits( (O_ + O_) ).toString() ;
 
 			const a_group = [];
-			a_group[0] = I_ + " " + J_ + " " + M_;
-			a_group[1] = K_ + " " + L_ + " " + N_;
-			a_group[2] = M_ + " " + N_ + " " + O_;
-			a_group[3] = M_ + " " + O_ + " " + P_;
-			a_group[4] = N_ + " " + O_ + " " + Q_;
-			a_group[5] = Q_ + " " + P_ + " " + R_;
-			a_group[6] = I_ + " " + M_ + " " + T_;
-			a_group[7] = J_ + " " + M_ + " " + S_;
-			a_group[8] = T_ + " " + S_ + " " + U_;
-			a_group[9] = L_ + " " + N_ + " " + W_;
-			a_group[10] = K_ + " " + N_ + " " + V_;
-			a_group[11] = W_ + " "  + V_ + " " +  X_;
-			a_group[12] =  Y1 + " " + Y2 + " " + Y3;
+			a_group[0] = O_;
+			a_group[1] = I_ + " " + J_ + " " + M_;
+			a_group[2] = K_ + " " + L_ + " " + N_;
+			a_group[3] = M_ + " " + N_ + " " + O_;
+			a_group[4] = M_ + " " + O_ + " " + P_;
+			a_group[5] = N_ + " " + O_ + " " + Q_;
+			a_group[6] = Q_ + " " + P_ + " " + R_;
+			a_group[7] = I_ + " " + M_ + " " + T_;
+			a_group[8] = J_ + " " + M_ + " " + S_;
+			a_group[9] = T_ + " " + S_ + " " + U_;
+			a_group[10] = L_ + " " + N_ + " " + W_;
+			a_group[11] = K_ + " " + N_ + " " + V_;
+			a_group[12] = W_ + " "  + V_ + " " +  X_;
+			a_group[13] =  Y1 + " " + Y2 + " " + Y3;
 
-			for (let i = 0; i < 13 ; i++) {
+			for (let i = 0; i <= 13 ; i++) {
 				text = a_group[i].replace(" ","").replace(" ","");
-				document.getElementById('F'+(i+1)+'_Result').textContent = text;
-				document.getElementById('F'+(i+1)+'_Result').innerHTML = '<a href="#" onclick="openModal(\''+text+'.html\'); return false;">' + text + '</a>';
+				document.getElementById('F'+(i)+'_Result').textContent = text;
+				document.getElementById('F'+(i)+'_Result').innerHTML = '<a href="#" onclick="openModal(\''+text+'.html\'); return false;">' + text + '</a>';
 			}			
-			
             // Draw Triangle
 
             drawTriangle(day);
