@@ -47,7 +47,7 @@
 </head>
 <body>
 
-    <h2>数易文化联合数字计算法 v1.1</h2>
+    <h2>数易文化联合数字计算法 v1.2</h2>
     <div id="loadStatus">Loading scripts...</div>
     <div class="container">
         <label for="dob">出生日期</label>
@@ -204,24 +204,42 @@
 	
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
+		let fpInstance;
 	// Initialize Flatpickr when the DOM is loaded
      // Get the status element
         const loadStatusElement = document.getElementById('loadStatus');
+		const dobInput = document.getElementById('dob'); // Get input element reference
 	
         document.addEventListener('DOMContentLoaded', (event) => {
 		   try {
-				flatpickr("#dob", {
-                dateFormat: "Y-m-d", // Output format (Year-Month-Day)
-                defaultDate: "today", // Set default date to today
-                // Enable year and month dropdowns
-                // These options significantly enhance selection on both desktop and mobile
-                enableTime: false, // Ensure time selection is off
-                allowInput: true, // Allow manual typing if desired
-                // Configuration to show dropdowns for year and month
-                minDate: "1900-01-01", // Example: restrict min date
-                maxDate: "2100-12-31", // Example: restrict max date
-                // Hooks to ensure it's robust for mobile and desktop
-            });
+		        fpInstance = flatpickr(dobInput, {
+                    dateFormat: "Y-m-d",
+                    defaultDate: "today",
+                    enableTime: false,
+                    allowInput: false, // Prevents direct typing and often helps bypass native picker
+                    clickOpens: false, // <--- CRITICAL: Prevents Flatpickr's default click handler
+                                        // so we can handle it manually and prevent browser defaults.
+                    // If you still see issues, consider experimenting with:
+                    // disableMobile: true, // Forces desktop UI on mobile, may not be ideal UX
+                    // wrap: true,          // If you use a wrapper element
+                    // static: true         // Makes the calendar always visible, not a popover (usually not desired for dates)
+                });
+  // Aggressively prevent native picker and force Flatpickr to open
+                // Listen for 'click' (for desktop/mouse) and 'touchend' (for mobile touch)
+                dobInput.addEventListener('click', (e) => {
+                    e.preventDefault(); // Stop native browser action (like opening native picker)
+                    e.stopPropagation(); // Stop event from bubbling up
+                    if (fpInstance && !fpInstance.isOpen) {
+                        fpInstance.open();
+                    }
+                });				
+   dobInput.addEventListener('touchend', (e) => {
+                    e.preventDefault(); // Stop native browser action
+                    e.stopPropagation(); // Stop event from bubbling up
+                    if (fpInstance && !fpInstance.isOpen) {
+                        fpInstance.open();
+                    }
+                });				
                 loadStatusElement.textContent = "Flatpickr loaded successfully!";
                 loadStatusElement.style.color = "green"; // Make it green on success
             } catch (error) {
