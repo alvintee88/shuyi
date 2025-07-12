@@ -360,7 +360,8 @@
             const F13_ = Y1 + " " + Y2 + " " + Y3;
             document.getElementById('F13_Result').textContent = F13_;
 
-			document.getElementById('F1_Result').innerHTML = F1_ + ' <a href="#" onclick="openModal(\'437.html\');return false;">Show Details</a>';
+			F1 = F1_.replace(" ","").replace(" ","");
+			document.getElementById('F1_Result').innerHTML = '<a href="#" onclick="openModal(\''+F1+'.html\'); return false;">' + F1 + '</a>';
 
             // Draw Triangle
 
