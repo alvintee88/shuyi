@@ -42,7 +42,7 @@
 </head>
 <body>
 
-    <h2>数易文化联合数字计算法 v1.1</h2>
+    <h2>数易文化联合数字计算法 v1.0</h2>
 
     <div class="container">
         <label for="dob">出生日期</label>
@@ -197,6 +197,8 @@
     </div>
 
     <canvas id="myCanvas" width="300" height="300"></canvas>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
         // Function to format date as YYYY-MM-DD
@@ -218,7 +220,7 @@
                 day = '0' + day;
             }
             //return `${year}-${month}-${day}`;
-			return '1999-12-31'; 
+			return '31-12-1999'; 
         }
 
         // Set the default value when the page loads
