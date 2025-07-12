@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<input type="text" id="datepicker" placeholder="Select Date">
+
+<script>
+  flatpickr("#datepicker", {
+    dateFormat: "Y-m-d",
+    disableMobile: true  // Forces custom UI on mobile
+  });
+</script>
