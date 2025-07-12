@@ -42,7 +42,7 @@
 </head>
 <body>
 
-    <h2>数易文化联合数字计算法 v1.2</h2>
+    <h2>数易文化联合数字计算法 v1.0</h2>
 
     <div class="container">
         <label for="dob">出生日期</label>
@@ -114,86 +114,6 @@
                 </tr>		
 			</tbody>
         </table>
-        <table>
-			<tbody>
-				<tr>
-					<td><strong>A</strong></td>
-					<td><strong>B</strong></td>
-					<td><strong>C</strong></td>
-					<td><strong>D</strong></td>
-					<td><strong>E</strong></td>
-					<td><strong>F</strong></td>
-					<td><strong>G</strong></td>
-					<td><strong>H</strong></td>
-				</tr>		
-				<tr>
-					<td id="A_Result"></td>
-					<td id="B_Result"></td>
-					<td id="C_Result"></td>
-					<td id="D_Result"></td>
-					<td id="E_Result"></td>
-					<td id="F_Result"></td>
-					<td id="G_Result"></td>
-					<td id="H_Result"></td>
-				</tr>		
-				<tr>
-					<td><strong>I (A + B)</strong></td>
-					<td><strong></strong></td>
-					<td><strong>J (C + D)</strong></td>
-					<td><strong></strong></td>
-					<td><strong>K (E + F)</strong></td>
-					<td><strong></strong></td>
-					<td><strong>L (G + H)</strong></td>
-					<td></td>
-				</tr>		
-				<tr>
-					<td id="I_Result"></td>
-					<td></td>
-					<td id="J_Result"></td>
-					<td></td>
-					<td id="K_Result"></td>
-					<td></td>
-					<td id="L_Result"></td>
-					<td></td>
-				</tr>		
-				<tr>
-					<td><strong>M (I + J)</strong></td>
-					<td><strong></strong></td>
-					<td><strong></strong></td>
-					<td><strong></strong></td>
-					<td><strong>N (K + L)</strong></td>
-					<td><strong></strong></td>
-					<td></td>
-					<td></td>
-				</tr>		
-				<tr>
-					<td id="M_Result"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td id="N_Result"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>		
-				<tr>
-					<td><strong>O (M + N)</strong></td>
-				</tr>		
-				<tr>
-					<td id="O_Result"></td>
-				</tr>		
-			</tbody>
-        </table>
-		
-        <p><strong>P (M + O):</strong> <span id="P_Result"></span></p>
-        <p><strong>Q (N + O):</strong> <span id="Q_Result"></span></p>
-        <p><strong>R (Q + P):</strong> <span id="R_Result"></span></p>
-        <p><strong>S (J + M):</strong> <span id="S_Result"></span></p>
-        <p><strong>T (I + M):</strong> <span id="T_Result"></span></p>
-        <p><strong>U (T + S):</strong> <span id="U_Result"></span></p>
-        <p><strong>V (K + N):</strong> <span id="V_Result"></span></p>
-        <p><strong>W (L + N):</strong> <span id="W_Result"></span></p>
-        <p><strong>X (V + W):</strong> <span id="X_Result"></span></p>
     </div>
 
     <canvas id="myCanvas" width="300" height="300"></canvas>
@@ -257,73 +177,49 @@
                 return sum;
             }
 
-            document.getElementById('A_Result').textContent = day[0];
-            document.getElementById('B_Result').textContent = day[1];
-            document.getElementById('C_Result').textContent = month[0];
-            document.getElementById('D_Result').textContent = month[1];
-            document.getElementById('E_Result').textContent = year[0];
-            document.getElementById('F_Result').textContent = year[1];
-            document.getElementById('G_Result').textContent = year[2];
-            document.getElementById('H_Result').textContent = year[3];
             // Calculate Add up Day
             const I_ = sumDigits(day);
-            document.getElementById('I_Result').textContent = I_;
 
             // Calculate Add up Month
             const J_ = sumDigits(month);
-            document.getElementById('J_Result').textContent = J_;
 
             // Calculate Add up Year Parts
 
             const K_ = sumDigits(year.substring(0, 2)); // e.g., "19" or "20"
             // For display, we show the summed digit of each part
             const addUpYearPart1Result = K_;
-            document.getElementById('K_Result').textContent = addUpYearPart1Result;
 
             const L_ = sumDigits(year.substring(2, 4)); // e.g., "82" or "25"
             const addUpYearPart2Result = L_;
-            document.getElementById('L_Result').textContent = addUpYearPart2Result;
 
 
             // NEW CALCULATION: M_ = I_addUpDay + J_addUpMonth
             // First sum the numbers, then apply sumDigits to the result (converted to string)
             const M_ = sumDigits((I_ + J_).toString());
-            document.getElementById('M_Result').textContent = M_;
 
             // NEW CALCULATION: N_ = K_yearPart1 + L_yearPart2
             // Sum the *numeric values* of the year parts, then apply sumDigits
             const N_ = sumDigits((parseInt(K_, 10) + parseInt(L_, 10)).toString());
-            document.getElementById('N_Result').textContent = N_;
 
             const O_ = sumDigits( (M_ + N_) ).toString() ;
-            document.getElementById('O_Result').textContent = O_;
 
             const P_ = sumDigits( (M_ + O_) ).toString() ;
-            document.getElementById('P_Result').textContent = P_;
 
             const Q_ = sumDigits( (N_ + O_) ).toString() ;
-            document.getElementById('Q_Result').textContent = Q_;
 
             const R_ = sumDigits( (Q_ + P_) ).toString() ;
-            document.getElementById('R_Result').textContent = R_;
 
             const S_ = sumDigits( (J_ + M_) ).toString() ;
-            document.getElementById('S_Result').textContent = S_;
 
             const T_ = sumDigits( (I_ + M_) ).toString() ;
-            document.getElementById('T_Result').textContent = T_;
 
             const U_ = sumDigits( (T_ + S_) ).toString() ;
-            document.getElementById('U_Result').textContent = U_;
 
             const V_ = sumDigits( (K_ + N_) ).toString() ;
-            document.getElementById('V_Result').textContent = V_;
 
             const W_ = sumDigits( (L_ + N_) ).toString() ;
-            document.getElementById('W_Result').textContent = W_;
 
             const X_ = sumDigits( (V_ + W_) ).toString() ;
-            document.getElementById('X_Result').textContent = X_;
 
 
             const Y1 = sumDigits( (M_ + M_) ).toString() ;
@@ -353,10 +249,10 @@
 			}			
             // Draw Triangle
 
-            drawTriangle(day);
+            drawTriangle(day,month,year.substring(0, 2),year.substring(2, 4),I_,J_,K_,L_,M_,N_,O_);
         }
 
-        function drawTriangle(textA) {
+        function drawTriangle(textA,textB,textC,textD,textI,textJ,textK,textL,textM,textN,textO) {
             const canvas = document.getElementById('myCanvas');
             const ctx = canvas.getContext('2d');
 
@@ -425,9 +321,26 @@
             ctx.textAlign = 'center'; // Center text horizontally
             ctx.textBaseline = 'middle'; // Center text vertically
 			// Position for M_ (Top segment)
+            //const A_TextY = topY + (segmentHeight / 2);
+            const Z_TextY = topY-20 ;
+            ctx.fillText(textA, apexX-60, Z_TextY);
+            ctx.fillText(textB, apexX-20, Z_TextY);
+            ctx.fillText(textC, apexX+20, Z_TextY);
+            ctx.fillText(textD, apexX+60, Z_TextY);
+
             const A_TextY = topY + (segmentHeight / 2);
-            ctx.fillText(textA, apexX, A_TextY);
+            ctx.fillText(textI, apexX-60, A_TextY);
+            ctx.fillText(textJ, apexX-20, A_TextY);
+            ctx.fillText(textK, apexX+20, A_TextY);
+            ctx.fillText(textL, apexX+60, A_TextY);
+
+            const B_TextY = topY + (segmentHeight / 2)+60;
+            ctx.fillText(textM, apexX-30, B_TextY);
+            //ctx.fillText(textN, apexX, B_TextY);
+            ctx.fillText(textN, apexX+30, B_TextY);
 			
+            const C_TextY = topY + (segmentHeight / 2)+120;
+            ctx.fillText(textO, apexX, C_TextY);
         }
 		function openModal(filename) {
   document.getElementById('myModal').style.display = 'block';
