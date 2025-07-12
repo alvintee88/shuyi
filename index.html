@@ -42,7 +42,7 @@
 </head>
 <body>
 
-    <h2>数易文化联合数字计算法 v1.0</h2>
+    <h2>数易文化联合数字计算法 v1.2</h2>
 
     <div class="container">
         <label for="dob">出生日期</label>
@@ -203,7 +203,7 @@
     <script>
         // Function to format date as YYYY-MM-DD
 	    flatpickr("#dob", {
-			dateFormat: "d-m-Y",
+			dateFormat: "Y-m-d",
 			disableMobile: true  // Forces custom UI on mobile
 		});
         function getTodayDateString() {
@@ -220,7 +220,7 @@
                 day = '0' + day;
             }
             //return `${year}-${month}-${day}`;
-			return '31-12-1999'; 
+			return '1999-12-31'; 
         }
 
         // Set the default value when the page loads
