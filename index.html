@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShuYi DOB Calculator</title>
+<!-- Hamburger Menu -->
+<div class="hamburger-container">
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <div id="menu" class="menu hidden">
+    <a href="#" onclick="openModal('1to9.html'); toggleMenu(); return false;">1-9性格诠释</a>
+    <a href="#" onclick="openModal('81.html'); toggleMenu(); return false;">菜单 2：八一数</a>
+  </div>
+</div>
+	
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,7 +46,47 @@
             border: 1px solid #000;
             margin-top: 20px;
         }
-  }
+  .hamburger-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2000;
+}
+
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 160px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.menu a {
+    padding: 8px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #eee;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
+
     </style>
 </head>
 <body>
@@ -140,7 +189,7 @@
                 day = '0' + day;
             }
             //return `${year}-${month}-${day}`;
-			return '1999-12-31'; 
+			return '1982-11-27';//'1999-12-31'; 
         }
 
         // Set the default value when the page loads
@@ -249,10 +298,10 @@
 			}			
             // Draw Triangle
 
-            drawTriangle(day,month,year.substring(0, 2),year.substring(2, 4),I_,J_,K_,L_,M_,N_,O_);
+            drawTriangle(day,month,year.substring(0, 2),year.substring(2, 4),I_,J_,K_,L_,M_,N_,O_,P_,Q_,R_,S_,T_,U_,V_,W_,X_);
         }
 
-        function drawTriangle(textA,textB,textC,textD,textI,textJ,textK,textL,textM,textN,textO) {
+        function drawTriangle(textA,textB,textC,textD,textI,textJ,textK,textL,textM,textN,textO,textP,textQ,textR,textS,textT,textU,textV,textW,textX) {
             const canvas = document.getElementById('myCanvas');
             const ctx = canvas.getContext('2d');
 
@@ -341,6 +390,15 @@
 			
             const C_TextY = topY + (segmentHeight / 2)+120;
             ctx.fillText(textO, apexX, C_TextY);
+            const D_TextY = topY + (segmentHeight / 2)+150;
+            ctx.fillText(textU+" "+textS+" "+textT, apexX-60, D_TextY);
+            ctx.fillText(textV+" "+textW+" "+textX, apexX+60, D_TextY);
+            const E_TextY = topY + (segmentHeight / 2)+200;
+            ctx.fillText(textQ+" "+textP+" "+textR, apexX+0, E_TextY);
+			
+			drawArrow(ctx, 120, 210, 60, 210, 10); // Draws an arrow from (50,50) to (150,100) with arrowhead size 10
+			drawArrow(ctx, 180, 210, 240, 210, 10); // Draws an arrow from (50,50) to (150,100) with arrowhead size 10
+			drawArrow(ctx, 120, 260, 180, 260, 10); // Draws an arrow from (50,50) to (150,100) with arrowhead size 10
         }
 		function openModal(filename) {
   document.getElementById('myModal').style.display = 'block';
@@ -357,6 +415,26 @@
 function closeModal() {
   document.getElementById('myModal').style.display = 'none';
   document.getElementById('modalContent').innerHTML = '';
+}
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('hidden');
+}
+function drawArrow(context, fromX, fromY, toX, toY, arrowHeadSize) {
+    // Draw the line (shaft)
+    context.beginPath();
+    context.moveTo(fromX, fromY);
+    context.lineTo(toX, toY);
+    context.stroke();
+
+    // Draw the arrowhead
+    const angle = Math.atan2(toY - fromY, toX - fromX);
+    context.beginPath();
+    context.moveTo(toX, toY);
+    context.lineTo(toX - arrowHeadSize * Math.cos(angle - Math.PI / 6), toY - arrowHeadSize * Math.sin(angle - Math.PI / 6));
+    context.lineTo(toX - arrowHeadSize * Math.cos(angle + Math.PI / 6), toY - arrowHeadSize * Math.sin(angle + Math.PI / 6));
+    context.closePath();
+    context.fill();
 }
     </script>
 <!-- Modal Structure -->
