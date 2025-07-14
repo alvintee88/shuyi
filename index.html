@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShuYi DOB Calculator</title>
-<!-- Hamburger Menu -->
-<div class="hamburger-container">
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-  <div id="menu" class="menu hidden">
-    <a href="#" onclick="openModal('1to9.html'); toggleMenu(); return false;">1-9性格诠释</a>
-    <a href="#" onclick="openModal('81.html'); toggleMenu(); return false;">菜单 2：八一数</a>
-  </div>
-</div>
+	<!-- Hamburger Menu -->
+	<div class="hamburger-container">
+	  <div class="hamburger" onclick="toggleMenu()">☰</div>
+	  <div id="menu" class="menu hidden">
+		<a href="#" onclick="openModal('1to9.html'); toggleMenu(); return false;">主性格1-9</a>
+		<a href="#" onclick="openModal('81.html'); toggleMenu(); return false;">81组联合数字</a>
+      </div>
+    </div>
 	
     <style>
         body {
@@ -46,61 +46,83 @@
             border: 1px solid #000;
             margin-top: 20px;
         }
-  .hamburger-container {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 2000;
-}
+		.hamburger-container {
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			z-index: 2000;
+		}
 
-.hamburger {
-    font-size: 30px;
-    cursor: pointer;
-    user-select: none;
-}
+		.hamburger {
+			font-size: 30px;
+			cursor: pointer;
+			user-select: none;
+		}
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    position: absolute;
-    top: 40px;
-    right: 0;
-    width: 160px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
+		.menu {
+			display: flex;
+			flex-direction: column;
+			background-color: white;
+			border: 1px solid #ccc;
+			padding: 10px;
+			position: absolute;
+			top: 40px;
+			right: 0;
+			width: 160px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
 
-.menu a {
-    padding: 8px;
-    text-decoration: none;
-    color: black;
-    border-bottom: 1px solid #eee;
-}
+		.menu a {
+			padding: 8px;
+			text-decoration: none;
+			color: black;
+			border-bottom: 1px solid #eee;
+		}
 
-.menu a:hover {
-    background-color: #f0f0f0;
-}
+		.menu a:hover {
+			background-color: #f0f0f0;
+		}
 
-.hidden {
-    display: none;
-}
+		.hidden {
+			display: none;
+		}
+		.results-container {
+		  display: flex;
+		  flex-direction: column; /* Mobile default: stacked */
+		  gap: 20px;
+		}
+	/* Desktop view: row layout */
+	@media (min-width: 768px) {
+	  .results-container {
+		flex-direction: row;
+		align-items: flex-start;
+	  }
 
+	  #results {
+		flex: 1; /* Take remaining space */
+	  }
+
+	  #myCanvas {
+		flex-shrink: 0; /* Don't shrink canvas */
+	  }
+	}		
     </style>
 </head>
 <body>
 
-    <h2>数易文化联合数字计算法 v1.0</h2>
+    <h3>数易文化联合数字计算法 v1.0</h3>
 
     <div class="container">
         <label for="dob">出生日期</label>
         <input type="text" id="dob" placeholder="Select Date">
         <button onclick="calculateAndDraw()">提交</button>
     </div>
+  <div class="results-container">	
+    <canvas id="myCanvas" width="300" height="300"></canvas>
+
 
     <div id="results">
-        <p style="color: blue;"><strong>主性格:</strong> <span  id="F0_Result">-</span></p>
+        <p style="color: blue;"><strong>主性格:</strong> <span  id="F0_Result">-</span> <span  id="F0a_Result"></span> </p>
 
         <table>
             <thead>
@@ -164,8 +186,7 @@
 			</tbody>
         </table>
     </div>
-
-    <canvas id="myCanvas" width="300" height="300"></canvas>
+</div>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -200,6 +221,7 @@
 
         function calculateAndDraw() {
             const dobInput = document.getElementById('dob').value;
+			const a_element = ["金","水","火","木","土","金","水","火","木"];
 
             if (!dobInput) {
                 alert('Please select a date of birth.');
@@ -296,6 +318,7 @@
 				document.getElementById('F'+(i)+'_Result').textContent = text;
 				document.getElementById('F'+(i)+'_Result').innerHTML = '<a href="#" onclick="openModal(\''+text+'.html\'); return false;">' + text + '</a>';
 			}			
+		    document.getElementById('F0a_Result').textContent = a_element[O_-1];
             // Draw Triangle
 
             drawTriangle(day,month,year.substring(0, 2),year.substring(2, 4),I_,J_,K_,L_,M_,N_,O_,P_,Q_,R_,S_,T_,U_,V_,W_,X_);
