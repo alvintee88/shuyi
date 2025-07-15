@@ -123,6 +123,32 @@
 
     <div id="results">
         <p style="color: blue;"><strong>主性格:</strong> <span  id="F0_Result">-</span> <span  id="F0a_Result"></span> </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>自身</th>
+                    <th>财富<br>子女</th>
+                    <th>事业<br>伴侣</th>
+                    <th>官鬼<br>疾病</th>
+                    <th>父母<br>贵人</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="E1_Result"></td>
+                    <td id="E2_Result"></td>
+                    <td id="E3_Result"></td>
+                    <td id="E4_Result"></td>
+                    <td id="E5_Result"></td>
+                <tr>
+                    <td id="C1_Result"></td>
+                    <td id="C2_Result"></td>
+                    <td id="C3_Result"></td>
+                    <td id="C4_Result"></td>
+                    <td id="C5_Result"></td>
+                </tr>		
+			</tbody>
+        </table>
 
         <table>
             <thead>
@@ -212,7 +238,8 @@
                 day = '0' + day;
             }
             //return `${year}-${month}-${day}`;
-			return '1999-12-31'; //'1982-11-27';
+			//return '1982-11-27';
+			return '1999-12-31';
         }
 
         // Set the default value when the page loads
@@ -223,8 +250,12 @@
 
         function calculateAndDraw() {
             const dobInput = document.getElementById('dob').value;
-			const a_element = ["金","水","火","木","土","金","水","火","木"];
+			//                    1    2   3    4    5    6    7    8    9    5    1    2   3    4
+			const a_element2 =  ["木4,9","火3,8","土5","金1,6","水2,7","木4,9","火3,8","土5","金1,6","水2,7","木4,9","火3,8","土5","金1,6","水2,7"];
+			//1、6为金，2、7为水，3、8为火，4、9为木，5为土
 
+			const a_count = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			const a_num = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             if (!dobInput) {
                 alert('Please select a date of birth.');
                 return;
@@ -252,47 +283,63 @@
 
             // Calculate Add up Day
             const I_ = sumDigits(day);
+			a_num[0] = I_;
 
             // Calculate Add up Month
             const J_ = sumDigits(month);
+			a_num[1] = J_;
 
             // Calculate Add up Year Parts
 
             const K_ = sumDigits(year.substring(0, 2)); // e.g., "19" or "20"
+			a_num[2] = K_;
             // For display, we show the summed digit of each part
             const addUpYearPart1Result = K_;
 
             const L_ = sumDigits(year.substring(2, 4)); // e.g., "82" or "25"
             const addUpYearPart2Result = L_;
+			a_num[3] = L_;
 
 
             // NEW CALCULATION: M_ = I_addUpDay + J_addUpMonth
             // First sum the numbers, then apply sumDigits to the result (converted to string)
             const M_ = sumDigits((I_ + J_).toString());
+			a_num[4] = M_;
 
             // NEW CALCULATION: N_ = K_yearPart1 + L_yearPart2
             // Sum the *numeric values* of the year parts, then apply sumDigits
             const N_ = sumDigits((parseInt(K_, 10) + parseInt(L_, 10)).toString());
+			a_num[5] = N_;
 
             const O_ = sumDigits( (M_ + N_) ).toString() ;
+			a_num[6] = O_;
 
             const P_ = sumDigits( (M_ + O_) ).toString() ;
+			a_num[7] = P_;
 
             const Q_ = sumDigits( (N_ + O_) ).toString() ;
+			a_num[8] = Q_;
 
             const R_ = sumDigits( (Q_ + P_) ).toString() ;
+			a_num[9] = R_;
 
             const S_ = sumDigits( (J_ + M_) ).toString() ;
+			a_num[10] = S_;
 
             const T_ = sumDigits( (I_ + M_) ).toString() ;
+			a_num[11] = T_;
 
             const U_ = sumDigits( (T_ + S_) ).toString() ;
+			a_num[12] = U_;
 
             const V_ = sumDigits( (K_ + N_) ).toString() ;
+			a_num[13] = V_;
 
             const W_ = sumDigits( (L_ + N_) ).toString() ;
+			a_num[14] = W_;
 
             const X_ = sumDigits( (V_ + W_) ).toString() ;
+			a_num[15] = X_;
 
 
             const Y1 = sumDigits( (M_ + M_) ).toString() ;
@@ -320,9 +367,37 @@
 				document.getElementById('F'+(i)+'_Result').textContent = text;
 				document.getElementById('F'+(i)+'_Result').innerHTML = '<a href="#" onclick="openModal(\''+text+'.html\'); return false;">' + text + '</a>';
 			}			
-		    document.getElementById('F0a_Result').textContent = a_element[O_-1];
+			text="unknown";
+			let main = Number(O_);
+			let pos=-1;
+			for (let i = 0; i<5; i++ ) 
+			{
+				if ( a_element2[i].indexOf(main)>=0 ) 
+				{
+				text = a_element2[i][0];
+				pos=i;
+				}
+				for (let j = 0; j < 16 ; j++) {
+					if ( a_element2[i].indexOf(a_num[j])>=0 ) a_count[i]++;
+				}
+			}
+			a_count[5] = a_count[0];
+			a_count[6] = a_count[1];
+			a_count[7] = a_count[2];
+			a_count[8] = a_count[3];
+			a_count[9] = a_count[4];
+			text1 = "";
+			for (let i = 0; i<10; i++ ) 
+			{
+				text1 += a_count[i] +",";
+			}
+		    document.getElementById('F0a_Result').textContent = text;//+" pos1="+pos1 + "====" + text1;
+			//
+			for (let i = 0; i < 5 ; i++) {
+				document.getElementById('E'+(i+1)+'_Result').textContent = a_element2[pos+i];//+" "+a_element3[main+i];
+				document.getElementById('C'+(i+1)+'_Result').textContent = a_count[pos+i];
+			}			
             // Draw Triangle
-
             drawTriangle(day,month,year.substring(0, 2),year.substring(2, 4),I_,J_,K_,L_,M_,N_,O_,P_,Q_,R_,S_,T_,U_,V_,W_,X_);
         }
 
@@ -426,15 +501,15 @@
 			drawArrow(ctx, 120, 260, 180, 260, 10); // Draws an arrow from (50,50) to (150,100) with arrowhead size 10
         }
 		function openModal(filename) {
-  document.getElementById('myModal').style.display = 'block';
-  fetch(filename)
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('modalContent').innerHTML = data;
-    })
-    .catch(error => {
-      document.getElementById('modalContent').innerHTML = 'Failed to load content.';
-    });
+			  document.getElementById('myModal').style.display = 'block';
+			  fetch(filename)
+				.then(response => response.text())
+				.then(data => {
+				  document.getElementById('modalContent').innerHTML = data;
+				})
+				.catch(error => {
+				  document.getElementById('modalContent').innerHTML = 'Failed to load content.';
+		});
 }
 
 function closeModal() {
