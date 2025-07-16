@@ -239,7 +239,8 @@
             }
             //return `${year}-${month}-${day}`;
 			//return '1982-11-27';
-			return '1999-12-31';
+			//return '1999-12-31';
+			return '2000-12-31';
         }
 
         // Set the default value when the page loads
@@ -296,9 +297,11 @@
             // For display, we show the summed digit of each part
             const addUpYearPart1Result = K_;
 
-            const L_ = sumDigits(year.substring(2, 4)); // e.g., "82" or "25"
+            let L_ = sumDigits(year.substring(2, 4)); // e.g., "82" or "25"
+			if (L_==0) L_=9;
             const addUpYearPart2Result = L_;
 			a_num[3] = L_;
+			
 
 
             // NEW CALCULATION: M_ = I_addUpDay + J_addUpMonth
