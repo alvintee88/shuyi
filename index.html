@@ -211,6 +211,51 @@
                 </tr>		
 			</tbody>
         </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>综合</th>
+                    <th>数字</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>(1) 先天</strong></td>
+                    <td id="G1_Result"></td>
+                <tr>
+                    <td><strong>(2) 个性</strong></td>
+                    <td id="G2_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(3) 正面</strong></td>
+                    <td id="G3_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(4) 负面</strong></td>
+                    <td id="G4_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(5) 特别</strong></td>
+                    <td id="G5_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(6) 加强</strong></td>
+                    <td id="G6_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(7) 内心</strong></td>
+                    <td id="G7_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(8) 外心</strong></td>
+                    <td id="G8_Result"></td>
+                </tr>		
+                <tr>
+                    <td><strong>(9) 浅意识</strong></td>
+                    <td id="G9_Result"></td>
+                </tr>		
+			</tbody>
+        </table>
     </div>
 	<a href="https://www.freecounterstat.com" title="web page hit counter"><img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=tzxxf1ahsarrcs58bw8dwuj5722ebmu4" border="0" title="web page hit counter" alt="web page hit counter"></a>
 	
@@ -240,7 +285,8 @@
             //return `${year}-${month}-${day}`;
 			//return '1982-11-27';
 			//return '1999-12-31';
-			return '2000-12-31';
+			//return '2000-12-31';
+			return '1992-01-20';
         }
 
         // Set the default value when the page loads
@@ -400,6 +446,68 @@
 				document.getElementById('E'+(i+1)+'_Result').textContent = a_element2[pos+i];//+" "+a_element3[main+i];
 				document.getElementById('C'+(i+1)+'_Result').textContent = a_count[pos+i];
 			}			
+			// G part
+		    document.getElementById('G1_Result').textContent = I_;
+		    document.getElementById('G2_Result').textContent = O_;
+			let strGroup="";
+			if ( strGroup.indexOf(I_)<0 ) strGroup+=" "+I_;
+			if ( strGroup.indexOf(J_)<0 ) strGroup+=" "+J_;
+			if ( strGroup.indexOf(K_)<0 ) strGroup+=" "+K_;
+			if ( strGroup.indexOf(L_)<0 ) strGroup+=" "+L_;
+			if ( strGroup.indexOf(M_)<0 ) strGroup+=" "+M_;
+			if ( strGroup.indexOf(N_)<0 ) strGroup+=" "+N_;
+			if ( strGroup.indexOf(O_)<0 ) strGroup+=" "+O_;
+			// sort it
+			strGroup = strGroup.substring(1,100);
+			const sortedString = strGroup.split(' ').map(Number).sort((a, b) => a - b).join(' ');
+
+		    document.getElementById('G3_Result').textContent = sortedString;
+			let strNotGroup="";
+			for ( let i=0; i<9; i++ )
+			{
+				if ( strGroup.indexOf(String(i+1))<0 ) strNotGroup+=" "+String(i+1);
+			}
+		    document.getElementById('G6_Result').textContent = strNotGroup;
+			if ( strGroup.indexOf(P_)<0 ) strGroup+=" "+P_;
+			if ( strGroup.indexOf(Q_)<0 ) strGroup+=" "+Q_;
+			if ( strGroup.indexOf(R_)<0 ) strGroup+=" "+R_;
+			if ( strGroup.indexOf(S_)<0 ) strGroup+=" "+S_;
+			if ( strGroup.indexOf(T_)<0 ) strGroup+=" "+T_;
+			if ( strGroup.indexOf(U_)<0 ) strGroup+=" "+U_;
+			if ( strGroup.indexOf(V_)<0 ) strGroup+=" "+V_;
+			if ( strGroup.indexOf(W_)<0 ) strGroup+=" "+W_;
+			if ( strGroup.indexOf(X_)<0 ) strGroup+=" "+X_;
+			strNotGroup="";
+			for ( let i=0; i<9; i++ )
+			{
+				if ( strGroup.indexOf(String(i+1))<0 ) strNotGroup+=" "+String(i+1);
+			}
+		    document.getElementById('G5_Result').textContent = strNotGroup;
+			let tmp = sumDigits((M_ + N_ + O_).toString());
+		    document.getElementById('G7_Result').textContent = tmp;
+			tmp = sumDigits((V_ + W_ + X_).toString());
+		    document.getElementById('G8_Result').textContent = tmp;
+			tmp = sumDigits((I_ + L_ + O_).toString());
+		    document.getElementById('G9_Result').textContent = tmp;
+			// over
+			tmp="";
+			
+			for ( let i=0; i<9; i++ )
+			{
+				let cnt=0;
+				let str=String(i+1);
+				if ( str.indexOf(I_)>=0 ) cnt++;
+				if ( str.indexOf(J_)>=0 ) cnt++;
+				if ( str.indexOf(K_)>=0 ) cnt++;
+				if ( str.indexOf(L_)>=0 ) cnt++;
+				if ( str.indexOf(M_)>=0 ) cnt++;
+				if ( str.indexOf(N_)>=0 ) cnt++;
+				if ( str.indexOf(O_)>=0 ) cnt++;
+				if ( cnt>1 ) tmp +=  " " + str;
+			}
+		    document.getElementById('G4_Result').textContent = tmp;
+			
+			
             // Draw Triangle
             drawTriangle(day,month,year.substring(0, 2),year.substring(2, 4),I_,J_,K_,L_,M_,N_,O_,P_,Q_,R_,S_,T_,U_,V_,W_,X_);
         }
